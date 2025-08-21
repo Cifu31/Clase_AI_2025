@@ -3,7 +3,7 @@
 Este repositorio contiene un programa en Python que simula un robot en una cuadrícula.  
 El robot puede moverse en cuatro direcciones, tiene una batería limitada y obtiene recompensas o castigos según sus acciones.  
 
-## 📌 Objetivos de la tarea
+Objetivos de la tarea
 - Implementar un robot que pueda desplazarse en una cuadrícula.
 - Incluir un sistema de batería que limite los movimientos del robot.
 - Añadir recompensas y castigos según el comportamiento.
@@ -12,7 +12,7 @@ El robot puede moverse en cuatro direcciones, tiene una batería limitada y obti
 
 ---
 
-## ⚙️ Funcionamiento del programa
+Funcionamiento del programa
 1. El robot comienza en la posición (0,0) con una batería al 100%.
 2. Puede moverse en cuatro direcciones: arriba, abajo, izquierda y derecha.
 3. Cada movimiento **consume batería**.
@@ -22,7 +22,7 @@ El robot puede moverse en cuatro direcciones, tiene una batería limitada y obti
 
 ---
 
-## 🎯 Reglas de recompensas y castigos
+ Reglas de recompensas y castigos
 - **Moverse con batería disponible:** +1 punto.
 - **Intentar moverse sin batería:** -5 puntos.
 - **Llegar al objetivo:** +10 puntos.
@@ -31,7 +31,7 @@ El robot puede moverse en cuatro direcciones, tiene una batería limitada y obti
 
 ---
 
-## 📝 Cambios realizados al código original
+Cambios realizados al código original
 Para cumplir con las condiciones de la tarea se hicieron los siguientes cambios:
 1. **Sistema de batería:** Se agregó un contador de batería que disminuye con cada movimiento.
 2. **Aviso de batería agotada:** Ahora el programa muestra el mensaje en mayúsculas `"BATERIA AGOTADA, POR FAVOR RECARGA"`.
