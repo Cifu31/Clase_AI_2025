@@ -23,10 +23,7 @@ Además, cumple con los 4 puntos solicitados en la tarea:
 # ========================
 # 1. VARIABLES DE ESTADO
 # ========================
-# El estado inicial del robot incluye:
-# - posición en la grilla (0,0)
-# - nivel de batería (50)
-# - si alcanzó o no el objetivo (False)
+# Estado inicial del robot
 estado_robot = {
     "posicion": (0, 0),
     "bateria": 50,
@@ -38,8 +35,6 @@ print("Estado inicial del robot:", estado_robot)
 # ========================
 # 2. ESPACIO DE ESTADOS
 # ========================
-# El espacio de estados es el conjunto de todas las combinaciones
-# posibles de posiciones y niveles de batería (simplificado en "alta" o "baja").
 posiciones = [(x, y) for x in range(3) for y in range(3)]
 baterias = ["alta", "baja"]
 
@@ -50,27 +45,26 @@ print("Ejemplos de estados:", espacio_estados[:5])
 # ========================
 # 3. ESPACIO DE ACCIONES
 # ========================
-# El robot puede moverse en las 4 direcciones básicas o recargar su batería.
 acciones = ["adelante", "atras", "izquierda", "derecha", "recargar"]
 print("\nAcciones posibles:", acciones)
 
 # ========================
 # 4. FUNCIÓN DE RECOMPENSA
 # ========================
-# Aquí se definen las recompensas y castigos que recibe el robot
-# dependiendo de la acción tomada y el estado alcanzado.
+# 🔹 NUEVO: se agregó esta función para manejar las recompensas y castigos.
+# Antes solo existía el movimiento, ahora se cuantifican las acciones.
 def recompensa(accion, nuevo_estado, paso):
     # Recompensa por recargar
     if accion == "recargar":
         return 5
     
-    # Castigo por intentar moverse sin batería
+    # Castigo por intentar moverse sin batería (PUNTO 3)
     if accion in ["adelante", "atras", "izquierda", "derecha"] and nuevo_estado["bateria"] == 0 and not nuevo_estado["objetivo_alcanzado"]:
         return -5  
 
     # Recompensa por alcanzar el objetivo
     if nuevo_estado["objetivo_alcanzado"]:
-        if paso < 5:  # Bonus por hacerlo rápido
+        if paso < 5:  # Bonus por hacerlo rápido (PUNTO 3)
             return 30  
         else:
             return 10  
@@ -84,7 +78,8 @@ def recompensa(accion, nuevo_estado, paso):
 # ========================
 # 5. AMBIENTE Y SIMULACIÓN
 # ========================
-# Esta función describe cómo el ambiente responde a las acciones del robot.
+# 🔹 FUNCION MODIFICADA: mover_robot ahora incluye el consumo de batería y bloqueo
+# si la batería llega a 0 (PUNTOS 1 y 2).
 def mover_robot(estado, accion):
     x, y = estado["posicion"]
 
@@ -100,20 +95,20 @@ def mover_robot(estado, accion):
             elif accion == "izquierda":
                 y = max(y - 1, 0)
             
-            # La batería baja 10 unidades por cada movimiento (PUNTO 1)
+            # 🔹 CAMBIO: la batería baja en cada movimiento (PUNTO 1)
             estado["bateria"] = max(estado["bateria"] - 10, 0)
         else:
-            # Si no tiene batería, no se mueve (PUNTO 2)
+            # 🔹 CAMBIO: aviso si no puede moverse por falta de batería (PUNTO 2)
             print("⚠️ BATERIA AGOTADA, POR FAVOR RECARGA")
 
     elif accion == "recargar":
-        # Acción de recarga, devuelve batería al 100
+        # 🔹 NUEVO: acción de recarga (PUNTO 2)
         estado["bateria"] = 100
 
     # Se actualiza la posición
     estado["posicion"] = (x, y)
 
-    # Si llega a (2, 2), se considera objetivo alcanzado
+    # 🔹 CAMBIO: Se define (2,2) como el objetivo final
     if estado["posicion"] == (2, 2):
         estado["objetivo_alcanzado"] = True
 
@@ -122,8 +117,7 @@ def mover_robot(estado, accion):
 # ========================
 # 6. SIMULACIÓN DEL ROBOT (MANUAL)
 # ========================
-# Aquí se permite al usuario controlar el robot manualmente.
-# La recompensa total se acumula según las reglas definidas.
+# 🔹 NUEVO: se agregó un bucle para controlar el robot manualmente (PUNTO 4).
 estado = {"posicion": (0, 0), "bateria": 50, "objetivo_alcanzado": False}
 recompensa_total = 0
 
@@ -153,6 +147,5 @@ for paso in range(10):  # Se limita a 10 pasos
         print("🎉 ¡Objetivo alcanzado!")
         break
 
-# Al final se muestra la recompensa acumulada
+# Resultado final
 print("\n✅ Recompensa total obtenida:", recompensa_total)
-
