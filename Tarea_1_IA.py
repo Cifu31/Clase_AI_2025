@@ -4,7 +4,7 @@ Created on Wed Aug 20 18:54:49 2025
 
 @author: camic
 
-Este código desarrolla una simulación simple de un robot en una grilla 3x3,
+Este código desarrolla una simulación simple de un robot en una grilla 2x2,
 aplicando los conceptos de:
 - Estado
 - Espacio de estados
@@ -155,3 +155,4 @@ for paso in range(10):  # Se limita a 10 pasos
 
 # Al final se muestra la recompensa acumulada
 print("\n✅ Recompensa total obtenida:", recompensa_total)
+
